@@ -1,4 +1,5 @@
 import User from "../../models/user.js";
+import bcrypt from "bcrypt";
 import {
   emailRegex,
   usernameRegex,
@@ -16,12 +17,12 @@ const createUser = async (username, email, password) => {
     password.trim(),
   ];
 
-  // Required inputs exist
-  if (!username || !email || !password || !grade) {
+  // required inputs exist
+  if (!username || !email || !password) {
     throw badRequestErr("All fields are required");
   }
 
-  // Input validation
+  // input validation
   switch (true) {
     case !usernameRegex.test(username):
       throw badRequestErr("Username must be 6-100 characters");
@@ -36,16 +37,15 @@ const createUser = async (username, email, password) => {
       break;
   }
 
-  // Bcrypt password before saving it to the database
+  // bcrypt password before saving it to the database
   const salt = await bcrypt.genSalt(parseInt(process.env.SALT_ROUNDS));
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  // Create a new user
+  // create a new user
   const newUser = new User({
     username: username.trim(),
     email: email.toLowerCase().trim(),
     password: hashedPassword,
-    grade: grade.trim(),
   });
 
   return newUser;
@@ -53,6 +53,7 @@ const createUser = async (username, email, password) => {
 
 const saveUser = async (newUser) => {
   // check for duplication
+  const { username, email } = newUser;
   const existingUser = await User.findOne({ $or: [{ username }, { email }] });
   if (existingUser) {
     throw badRequestErr("Username or email already exists");
@@ -79,7 +80,7 @@ const createJwtToken = async (user) => {
     expiresIn,
   });
   if (!token) {
-    throw internalServerErr("Error generating token for session.");
+    throw internalServerErr();
   }
   return token;
 };

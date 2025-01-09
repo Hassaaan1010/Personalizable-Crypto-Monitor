@@ -1,20 +1,26 @@
 import { sendErrResp } from "../utils/errorHandling.js";
 import { createJwtToken, createUser, saveUser } from "./helpers/authHelpers.js";
 
-const login = async () => {};
+const login = async (req, res) => {
+  res.status(200);
+};
 
 const register = async (req, res) => {
   try {
-    let [username, email, password] = req.body;
+    let { username, email, password } = req.body;
 
     // validate and create new user
-    const newUser = createUser(username, email, password);
+    const newUser = await createUser(username, email, password);
 
     // save to db
     await saveUser(newUser);
 
+    console.log("saved");
+
     // create jwt token
     const token = await createJwtToken(newUser);
+
+    console.log("token made");
 
     // Response: token, username, _id
     return res.status(201).json({
@@ -22,9 +28,12 @@ const register = async (req, res) => {
       username: newUser.username,
       _id: newUser._id,
     });
+    // return res.status(200);
   } catch (error) {
     console.log(error);
-    sendErrResp(res, { status: 500, message: "Error registering user" });
+    console.log(error.status, error.message);
+
+    sendErrResp(res, { status: error.status, message: error.message });
   }
 };
 
