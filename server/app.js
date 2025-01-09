@@ -10,7 +10,7 @@ dotenv.config();
 
 // Server instance
 const app = express();
-const port = process.env.CLIENT_PORT;
+const port = process.env.PORT;
 
 // morgan log
 morgan.token("customDate", () => {

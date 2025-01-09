@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { login, register } from "../controllers/authControllers.js";
+import rateLimiter from "../middleware/rateLimiter.js";
 
 const router = Router();
 
-router.post("/login", login);
-router.post("/register", register);
+router.post("/register", rateLimiter, register);
+router.post("/login", rateLimiter, login);
 
 export default router;
