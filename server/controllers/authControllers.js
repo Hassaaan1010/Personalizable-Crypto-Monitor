@@ -1,8 +1,30 @@
 import { sendErrResp } from "../utils/errorHandling.js";
-import { createJwtToken, createUser, saveUser } from "./helpers/authHelpers.js";
+import {
+  createJwtToken,
+  createUser,
+  saveUser,
+  authenticateUser,
+} from "./helpers/authHelpers.js";
 
 const login = async (req, res) => {
-  res.status(200);
+  try {
+    const { identifier, password } = req.body;
+
+    // authenticate user
+    const user = await authenticateUser(identifier, password);
+    console.log("authed");
+    // create token
+    const token = await createJwtToken(user);
+    console.log("tokened");
+    // Response: token, username, _id
+    return res.status(201).json({
+      token: token,
+      username: user.username,
+      _id: user._id,
+    });
+  } catch (error) {
+    sendErrResp(res, { status: error.status, message: error.message });
+  }
 };
 
 const register = async (req, res) => {
@@ -15,12 +37,8 @@ const register = async (req, res) => {
     // save to db
     await saveUser(newUser);
 
-    console.log("saved");
-
     // create jwt token
     const token = await createJwtToken(newUser);
-
-    console.log("token made");
 
     // Response: token, username, _id
     return res.status(201).json({
@@ -28,11 +46,8 @@ const register = async (req, res) => {
       username: newUser.username,
       _id: newUser._id,
     });
-    // return res.status(200);
   } catch (error) {
     console.log(error);
-    console.log(error.status, error.message);
-
     sendErrResp(res, { status: error.status, message: error.message });
   }
 };

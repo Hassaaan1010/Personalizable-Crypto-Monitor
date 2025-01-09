@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 dotenv.config();
 
-// authorize token middleware
+// middleware to authorize token
 export const authorizeToken = (req, res, next) => {
   const token = req.headers.authorization;
   const tokenPart = token && token.split(" ")[1];

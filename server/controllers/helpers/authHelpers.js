@@ -5,7 +5,11 @@ import {
   usernameRegex,
   passwordRegex,
 } from "../../utils/patterns.js";
-import { internalServerErr, badRequestErr } from "../../utils/errorHandling.js";
+import {
+  internalServerErr,
+  badRequestErr,
+  unauthorizedErr,
+} from "../../utils/errorHandling.js";
 import jsonwebtoken from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
@@ -13,7 +17,7 @@ dotenv.config();
 const createUser = async (username, email, password) => {
   [username, email, password] = [
     username.trim(),
-    email.trim(),
+    email.trim().toLowerCase(),
     password.trim(),
   ];
 
@@ -85,4 +89,31 @@ const createJwtToken = async (user) => {
   return token;
 };
 
-export { createUser, saveUser, createJwtToken };
+const authenticateUser = async (identifier, password) => {
+  [identifier, password] = [identifier.trim(), password.trim()];
+
+  if (!passwordRegex.test(password)) {
+    throw badRequestErr("Invalid password.");
+  }
+
+  if (emailRegex.test(identifier) || usernameRegex.test(identifier)) {
+    const user = await User.findOne({
+      $or: [{ email: identifier }, { username: identifier }],
+    });
+
+    if (!user) {
+      throw internalServerErr("User not found");
+    }
+
+    // check if password correct
+    if (await bcrypt.compare(password, user.password)) {
+      return user;
+    } else {
+      throw unauthorizedErr("Incorrect password");
+    }
+  } else {
+    throw badRequestErr("Invalid input.");
+  }
+};
+
+export { createUser, saveUser, createJwtToken, authenticateUser };

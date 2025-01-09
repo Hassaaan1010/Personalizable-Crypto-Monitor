@@ -5,7 +5,7 @@ import rateLimiter from "../middleware/rateLimiter.js";
 const router = Router();
 
 router
-  .post("/register", rateLimiter, register)
-  .post("/login", rateLimiter, login);
+  .post("/login", rateLimiter, login)
+  .post("/register", rateLimiter, register);
 
 export default router;
