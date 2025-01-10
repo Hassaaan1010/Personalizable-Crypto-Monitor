@@ -17,6 +17,7 @@ const sendRecoveryLink = async (req, res) => {
     // Sanitize email
     let { email } = req.body;
     email = email.trim().toLowerCase();
+    console.log(email, "recieved");
 
     // verify user exists (sanitize email using trim, regex ... )
     const user = await getUserByEmail(email); //define this helper function
@@ -41,6 +42,7 @@ const sendRecoveryLink = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
     let { userId, password, token } = req.body;
+    console.log(userId, password, token);
 
     // sanitize and validate data
     [userId, password, token] = sanitizeInput(userId, password, token);

@@ -35,10 +35,18 @@ const Home = () => {
     checkAuthorization();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
   return (
     <div>
       <h1>Welcome to Home</h1>
       <a href="/login"></a>
+      <button className="submit-button" onClick={handleLogout}>
+        Logout
+      </button>
     </div>
   );
 };

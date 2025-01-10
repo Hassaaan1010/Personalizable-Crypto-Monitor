@@ -20,7 +20,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route
-            path="/forgotPassword/resetPassword/:id"
+            path="/forgotPassword/resetPassword/:userId"
             element={<ResetPassword />}
           />
           <Route path="*" element={<Navigate replace to="/login" />} />{" "}
