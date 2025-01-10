@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useEffect } from "react";
 
 const Login = () => {
@@ -100,10 +100,10 @@ const Login = () => {
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         </div>
         <p>
-          Don't have an account? <a href="/register">Register</a>
+          Do not have an account? <Link to="/register">Register</Link>{" "}
         </p>
         <p>
-          <a href="/forgotPassword">Forgot password?</a>
+          <Link to="/forgotPassword">Forgot password?</Link>
         </p>
         <button type="submit">Login</button>
       </form>
