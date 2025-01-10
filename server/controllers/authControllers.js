@@ -12,10 +12,10 @@ const login = async (req, res) => {
 
     // authenticate user
     const user = await authenticateUser(identifier, password);
-    console.log("authed");
+
     // create token
     const token = await createJwtToken(user);
-    console.log("tokened");
+
     // Response: token, username, _id
     return res.status(201).json({
       token: token,
@@ -23,7 +23,7 @@ const login = async (req, res) => {
       _id: user._id,
     });
   } catch (error) {
-    sendErrResp(res, { status: error.status, message: error.message });
+    sendErrResp(res, error);
   }
 };
 
@@ -47,8 +47,7 @@ const register = async (req, res) => {
       _id: newUser._id,
     });
   } catch (error) {
-    console.log(error);
-    sendErrResp(res, { status: error.status, message: error.message });
+    sendErrResp(res, error);
   }
 };
 

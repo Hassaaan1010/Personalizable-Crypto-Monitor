@@ -1,5 +1,61 @@
-const updateDatabase = async () => {};
+import { isObjectIdOrHexString } from "mongoose";
+import {
+  badRequestErr,
+  internalServerErr,
+  sendErrResp,
+} from "../utils/errorHandling.js";
+import {
+  getUserByEmail,
+  generateLink,
+  sendMail,
+  savePassword,
+  validateToken,
+  sanitizeInput,
+} from "./helpers/forgotPasswordHelpers.js";
+import { passwordRegex } from "../utils/patterns.js";
 
-const createNewPassword = async () => {};
+const sendRecoveryLink = async (req, res) => {
+  try {
+    // Sanitize email
+    let { email } = req.body;
+    email = email.trim().toLowerCase();
 
-export { createNewPassword };
+    // verify user exists (sanitize email using trim, regex ... )
+    const user = await getUserByEmail(email); //define this helper function
+
+    // generate password reset link "
+    const resetLink = await generateLink(user);
+
+    // send email
+    const mailSuccess = await sendMail(user.username, email, resetLink); //define helper function
+
+    if (!mailSuccess) {
+      throw internalServerErr("Failed to send recovery mail");
+    }
+
+    return res.status(200).json({ message: "Recoverly link sent." });
+  } catch (error) {
+    sendErrResp(res, error);
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const { userId, password, token } = req.body;
+
+    // sanitize and validate data
+    [userId, password, token] = sanitizeInput(userId, password, token);
+
+    // check if token is valid
+    await validateToken(userId, token);
+
+    // save new password
+    const resetSuccess = await savePassword(userId, password);
+
+    res.status(201).json({ message: "Password reset successful." });
+  } catch (error) {
+    sendErrResp(res, error);
+  }
+};
+
+export { sendRecoveryLink, resetPassword };

@@ -1,8 +1,12 @@
 import { Router } from "express";
-import { createNewPassword } from "../controllers/forgotPasswordController.js";
+import {
+  sendRecoveryLink,
+  resetPassword,
+} from "../controllers/forgotPasswordController.js";
 
 const router = Router();
 
-router.post("/forgotPassword", createNewPassword); // email to send new password
-
+router
+  .post("/recoverAccount", sendRecoveryLink) // email to send link
+  .post("/resetPassword", resetPassword);
 export default router;
