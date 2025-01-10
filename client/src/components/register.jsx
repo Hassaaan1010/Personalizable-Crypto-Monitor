@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const baseUrl = process.env.REACT_APP_BASE_URL || "http://localhost:4000";
+  const baseUrl = import.meta.env.REACT_APP_BASE_URL || "http://localhost:4000";
   const [formData, setFormData] = useState({
     username: "",
     email: "",

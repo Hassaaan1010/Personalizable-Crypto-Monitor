@@ -3,7 +3,7 @@ import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ResetPassword = () => {
-  const baseUrl = process.env.REACT_APP_BASE_URL || "http://localhost:4000";
+  const baseUrl = import.meta.env.REACT_APP_BASE_URL || "http://localhost:4000";
   const { userId } = useParams(); // Get dynamic ID
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token"); // Get token from query string
