@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ForgotPassword = () => {
-  const baseUrl = "http://localhost:4000";
+  const baseUrl = process.env.REACT_APP_BASE_URL || "http://localhost:4000";
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
