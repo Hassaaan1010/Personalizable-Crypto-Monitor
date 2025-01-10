@@ -1,4 +1,3 @@
-import { isObjectIdOrHexString } from "mongoose";
 import {
   badRequestErr,
   internalServerErr,
@@ -12,7 +11,6 @@ import {
   validateToken,
   sanitizeInput,
 } from "./helpers/forgotPasswordHelpers.js";
-import { passwordRegex } from "../utils/patterns.js";
 
 const sendRecoveryLink = async (req, res) => {
   try {
@@ -35,13 +33,14 @@ const sendRecoveryLink = async (req, res) => {
 
     return res.status(200).json({ message: "Recoverly link sent." });
   } catch (error) {
+    console.log(error);
     sendErrResp(res, error);
   }
 };
 
 const resetPassword = async (req, res) => {
   try {
-    const { userId, password, token } = req.body;
+    let { userId, password, token } = req.body;
 
     // sanitize and validate data
     [userId, password, token] = sanitizeInput(userId, password, token);
@@ -50,10 +49,11 @@ const resetPassword = async (req, res) => {
     await validateToken(userId, token);
 
     // save new password
-    const resetSuccess = await savePassword(userId, password);
+    await savePassword(userId, password);
 
-    res.status(201).json({ message: "Password reset successful." });
+    res.status(201).json({ message: "Password reset successfully." });
   } catch (error) {
+    console.log(error);
     sendErrResp(res, error);
   }
 };

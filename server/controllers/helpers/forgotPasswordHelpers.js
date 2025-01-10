@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
+import { isObjectIdOrHexString } from "mongoose";
 import { internalServerErr, badRequestErr } from "../../utils/errorHandling.js";
 import { emailRegex, tokenRegex, passwordRegex } from "../../utils/patterns.js";
 import User from "../../models/user.js";
@@ -11,9 +12,9 @@ dotenv.config();
 const transporter = nodemailer.createTransport({
   secure: true,
   host: "smtp.gmail.com",
-  port: parseInt(process.env.APP_PORT),
+  port: 465,
   auth: {
-    user: "register.apibot@gmail.com",
+    user: process.env.MAIL,
     pass: process.env.APP_PASSWORD,
   },
 });
@@ -171,7 +172,7 @@ const savePassword = async (userId, password) => {
   const hashedPassword = await bcrypt.hash(password, salt);
 
   // update password in db
-  await User.updateOne({ userId: userId }, { password: hashedPassword });
+  await User.updateOne({ _id: userId }, { password: hashedPassword });
 
   // delete token from db
   await Token.deleteOne({ userId: userId });

@@ -23,6 +23,7 @@ const login = async (req, res) => {
       _id: user._id,
     });
   } catch (error) {
+    console.log(error);
     sendErrResp(res, error);
   }
 };
@@ -47,6 +48,7 @@ const register = async (req, res) => {
       _id: newUser._id,
     });
   } catch (error) {
+    console.log(error);
     sendErrResp(res, error);
   }
 };
