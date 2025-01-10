@@ -25,7 +25,11 @@ app.use(
 
 // CORS
 const cors_options = {
-  origin: `http://localhost:${port}`,
+  origin: [
+    `http://localhost:${process.env.CLIENT_PORT}`,
+    "http://localhost:5173/",
+    // "http://127.0.0.1:5173/",
+  ],
   optionsSuccessStatus: 200,
 };
 app.use(cors(cors_options));

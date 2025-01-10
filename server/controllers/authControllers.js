@@ -8,7 +8,9 @@ import {
 
 const login = async (req, res) => {
   try {
+    console.log(req.body);
     const { identifier, password } = req.body;
+    console.log(123);
 
     // authenticate user
     const user = await authenticateUser(identifier, password);
@@ -17,7 +19,7 @@ const login = async (req, res) => {
     const token = await createJwtToken(user);
 
     // Response: token, username, _id
-    return res.status(201).json({
+    return res.status(200).json({
       token: token,
       username: user.username,
       _id: user._id,
@@ -30,6 +32,7 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   try {
+    console.log(req.body);
     let { username, email, password } = req.body;
 
     // validate and create new user

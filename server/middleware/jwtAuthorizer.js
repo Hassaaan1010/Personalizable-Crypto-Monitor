@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 dotenv.config();
 
 // middleware to authorize token
-export const authorizeToken = (req, res, next) => {
+const authorizeToken = (req, res, next) => {
   const token = req.headers.authorization;
   const tokenPart = token && token.split(" ")[1];
 
@@ -31,3 +31,5 @@ export const authorizeToken = (req, res, next) => {
     next();
   });
 };
+
+export default authorizeToken;
