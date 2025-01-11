@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"; // Import React Router components
 import "./App.css";
-import { HashRouter as Router } from "react-router-dom";
 
 // Import your components
 import Home from "./components/home";
@@ -12,8 +11,7 @@ import ResetPassword from "./components/resetPassword";
 
 function App() {
   return (
-    // <BrowserRouter>
-    <HashRouter>
+    <BrowserRouter>
       <div className="App">
         <Routes>
           {/* Define your routes */}
@@ -28,8 +26,7 @@ function App() {
           <Route path="*" element={<Navigate replace to="/login" />} />{" "}
         </Routes>
       </div>
-    </HashRouter>
-    // </BrowserRouter>
+    </BrowserRouter>
   );
 }
 
