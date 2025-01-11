@@ -79,7 +79,7 @@ const Login = () => {
             id="identifier"
             name="identifier"
             placeholder="Username or email"
-            value={formData.username}
+            value={formData.identifier}
             onChange={handleChange}
             required
           />
