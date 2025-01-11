@@ -53,6 +53,7 @@ const Login = () => {
       const response = await axios.post(`${baseUrl}/auth/login`, formData);
 
       if (response.status === 200) {
+        console.log("login success");
         // Successful login, redirect to home
         localStorage.setItem("jwt", response.data.token); // Store JWT token
         localStorage.setItem("username", response.data.username);
