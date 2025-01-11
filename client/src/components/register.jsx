@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const baseUrl = import.meta.env.VITE_APP_BASE_URL || "http://localhost:4000";
+  console.log("Register comp loaded");
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -114,7 +115,7 @@ const Register = () => {
         </div>
 
         <p>
-          Have an account? <a href="/login">Login</a>
+          Have an account?<Link to="/login">Login</Link>
         </p>
 
         <button type="submit">Register</button>
