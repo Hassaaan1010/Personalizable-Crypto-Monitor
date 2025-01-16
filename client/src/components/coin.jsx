@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import "../styleSheets/navbar.css";
 
 const Coin = () => {
   const { id } = useParams();
@@ -126,6 +127,16 @@ const Coin = () => {
 
   return (
     <div>
+      <div className="button-container">
+        <Link to="/home">
+          <button className="submit-button">Home</button>
+        </Link>
+        <Link to="/searchCoins">
+          <button className="submit-button">Search</button>
+        </Link>
+      </div>
+      <br />
+      <br />
       <div>
         <img src={image.large} alt={name} />
         <h2>
@@ -149,12 +160,14 @@ const Coin = () => {
         <p>
           <strong>24h Low:</strong> ₹{market_data.low_24h.inr.toLocaleString()}
         </p>
-        <button style={styles.addButton} onClick={handleAddCoin}>
-          Add Coin
-        </button>
-        <button style={styles.removeButton} onClick={handleRemoveCoin}>
-          Remove Coin
-        </button>
+        <div className="button-container">
+          <button style={styles.addButton} onClick={handleAddCoin}>
+            Add Coin
+          </button>
+          <button style={styles.removeButton} onClick={handleRemoveCoin}>
+            Remove Coin
+          </button>
+        </div>
         <button
           style={styles.triggerButton}
           onClick={() => setShowTriggerForm(true)}
@@ -164,6 +177,7 @@ const Coin = () => {
       </div>
       {showTriggerForm && (
         <div>
+          <br />
           <form onSubmit={handleCreateTrigger}>
             <label>
               Min Limit:

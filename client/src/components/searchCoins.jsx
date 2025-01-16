@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "../styleSheets/searchCoins.css"; // Import the CSS file for styling
+import "../styleSheets/navbar.css";
 
 const SearchPage = () => {
   const [query, setQuery] = useState("");
@@ -40,9 +41,15 @@ const SearchPage = () => {
   return (
     <>
       <h1>Search</h1>
-      <div>
-        <Link to="/home">Home</Link>
+      <div className="button-container">
+        <Link to="/topCoins">
+          <button className="submit-button">Top Coins</button>
+        </Link>
+        <Link to="/home">
+          <button className="submit-button">Home</button>
+        </Link>
       </div>
+
       <div className="search-page">
         <div className="search-bar-container">
           <input

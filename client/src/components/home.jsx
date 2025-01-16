@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "../styleSheets/home.css";
+import "../styleSheets/navbar.css";
 
 const Home = () => {
   const baseUrl = import.meta.env.VITE_APP_BASE_URL || "http://localhost:4000";
@@ -54,15 +55,16 @@ const Home = () => {
   return (
     <div>
       <h1>Welcome to Home</h1>
-      <button className="submit-button" onClick={handleLogout}>
-        Logout
-      </button>
-      <br />
-      <div>
-        <Link to="/topCoins">Top Coins</Link>
-      </div>
-      <div>
-        <Link to="/searchCoins">Search</Link>
+      <div className="button-container">
+        <button className="submit-button" onClick={handleLogout}>
+          Logout
+        </button>
+        <Link to="/topCoins">
+          <button className="submit-button">Top Coins</button>
+        </Link>
+        <Link to="/searchCoins">
+          <button className="submit-button">Search</button>
+        </Link>
       </div>
       <br />
       {userCoins ? (

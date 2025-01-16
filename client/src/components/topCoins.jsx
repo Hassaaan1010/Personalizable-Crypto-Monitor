@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styleSheets/topCoins.css"; // Import the CSS file for styling
+import "../styleSheets/navbar.css";
 
 const TopCoins = () => {
   const [coins, setCoins] = useState([]);
@@ -32,7 +33,14 @@ const TopCoins = () => {
         <h1>Top Coins</h1>
         <p>Updates every minute!</p>
       </div>
-      <Link to="/home">Home</Link>
+      <div className="button-container">
+        <Link to="/home">
+          <button className="submit-button">Home</button>
+        </Link>
+        <Link to="/searchCoins">
+          <button className="submit-button">Search</button>
+        </Link>
+      </div>
       <div className="top-coins-container">
         {coins.map((coin) => (
           <div key={coin.id} className="coin-tab">
