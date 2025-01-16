@@ -18,6 +18,11 @@ const userSchema = new Schema({
     required: true,
     minlength: [6, "Password must be at least 6 characters long"],
   },
+  coins: {
+    type: [String],
+    required: true,
+    default: [],
+  },
 });
 
 const User = model("User", userSchema);
