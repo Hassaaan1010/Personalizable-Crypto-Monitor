@@ -55,6 +55,7 @@ const fetchAndCachePrices = async () => {
 };
 
 // Run fetcher every 2 minute
+fetchAndCachePrices();
 setInterval(fetchAndCachePrices, 60000);
 
 // Log startup message
