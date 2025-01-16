@@ -61,7 +61,7 @@ const Home = () => {
         <Link to="/topCoins">Top Coins</Link>
       </div>
       <div>
-        <Link to="/search">Search</Link>
+        <Link to="/searchCoins">Search</Link>
       </div>
       <br />
       {userCoins ? (

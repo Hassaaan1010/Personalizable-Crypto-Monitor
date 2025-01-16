@@ -10,6 +10,7 @@ import ForgotPassword from "./components/forgotPassword";
 import ResetPassword from "./components/resetPassword";
 import Coin from "./components/coin";
 import TopCoins from "./components/topCoins";
+import SearchPage from "./components/searchCoins";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/coin/:id" element={<Coin />} />
           <Route path="topCoins" element={<TopCoins />} />
+          <Route path="searchCoins" element={<SearchPage />} />
           <Route
             path="/forgotPassword/resetPassword/:userId"
             element={<ResetPassword />}

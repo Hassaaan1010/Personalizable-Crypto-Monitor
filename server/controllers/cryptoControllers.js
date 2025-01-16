@@ -84,8 +84,8 @@ const getSearchResults = async (req, res) => {
   try {
     const { query } = req.query;
 
-    if (query.length() > 25) {
-      throw badRequestError("Query length exceeded (25).");
+    if (query.length > 25) {
+      throw badRequestErr("Query length exceeded (25).");
     }
 
     // Call CoinGecko's search API
