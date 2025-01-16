@@ -1,0 +1,71 @@
+/* Home container */
+.home-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+.home-heading {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #343a40;
+  margin-bottom: 15px;
+}
+
+/* Coins list */
+.coins-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Individual coin item */
+.coin-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.coin-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Link styling */
+.coin-link {
+  font-size: 18px;
+  font-weight: 600;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.coin-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* Price styling */
+.coin-price {
+  font-size: 16px;
+  color: #495057;
+}
+
+/* Loading message */
+.loading-message {
+  font-size: 18px;
+  text-align: center;
+  color: #6c757d;
+  margin-top: 20px;
+}

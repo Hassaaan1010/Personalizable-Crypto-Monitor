@@ -15,7 +15,7 @@ import authorizeToken from "../middleware/jwtAuthorizer.js";
 const router = Router();
 
 router.get("/topCoins", rateLimiter, getTopCoins);
-router.get("/myCoins", rateLimiter, getUsersCoins);
+router.get("/myCoins", rateLimiter, authorizeToken, getUsersCoins);
 router.get("/search", rateLimiter, getSearchResults);
 router.post("/addCoin", rateLimiter, authorizeToken, addCoin);
 router.post("/removeCoin", rateLimiter, authorizeToken, removeCoin);

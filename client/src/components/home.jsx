@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import "../styleSheets/home.css";
 
 const Home = () => {
   const baseUrl = import.meta.env.VITE_APP_BASE_URL || "http://localhost:4000";
@@ -65,24 +66,21 @@ const Home = () => {
       </div>
       <br />
       {userCoins ? (
-        <div>
-          <h2>Your Coins</h2>
-          <ul>
+        <div className="home-container">
+          <h2 className="home-heading">Your Coins</h2>
+          <ul className="coins-list">
             {Object.entries(userCoins).map(([coin, data]) => (
-              <li key={coin}>
-                <a
-                  href={`/coin/${coin}`}
-                  style={{ textDecoration: "none", color: "blue" }}
-                >
+              <li key={coin} className="coin-item">
+                <a href={`/coin/${coin}`} className="coin-link">
                   {coin.charAt(0).toUpperCase() + coin.slice(1)}
-                </a>{" "}
-                - ₹{data.inr.toLocaleString()}
+                </a>
+                <span className="coin-price">₹{data.inr.toLocaleString()}</span>
               </li>
             ))}
           </ul>
         </div>
       ) : (
-        <p>Loading your coins...</p>
+        <p className="loading-message">Loading your coins...</p>
       )}
     </div>
   );
