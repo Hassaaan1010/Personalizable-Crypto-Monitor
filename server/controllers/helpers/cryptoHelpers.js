@@ -75,6 +75,7 @@ const getCoinsByNames = async (coins) => {
 
     if (coinPrice) {
       // Cache hit: store the result
+      console.log("Cache hit for coin:", coin);
       cacheHitData[coin] = JSON.parse(coinPrice);
     } else {
       // Cache miss: append to the list of coins to fetch

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 const Home = () => {
@@ -56,7 +56,14 @@ const Home = () => {
       <button className="submit-button" onClick={handleLogout}>
         Logout
       </button>
-
+      <br />
+      <div>
+        <Link to="/topCoins">Top Coins</Link>
+      </div>
+      <div>
+        <Link to="/search">Search</Link>
+      </div>
+      <br />
       {userCoins ? (
         <div>
           <h2>Your Coins</h2>

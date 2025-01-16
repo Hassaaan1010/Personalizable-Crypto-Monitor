@@ -36,19 +36,21 @@ const getTopCoins = async (req, res) => {
 
     // If cache miss, fetch from CoinGecko API
     const response = await axios.get(
-      "https://api.coingecko.com/api/v3/coins/markets" || COINGECKO_API_URL,
+      "https://api.coingecko.com/api/v3/coins/markets",
       {
-        // params: {
-        //   // ids: topCoins.join(","), // Join the coins array into a comma-separated string
-        //   // vs_currencies: "inr", // Currency to convert to
-        // },
-        headers: {
-          "x-cg-pro-api-key": process.env.COINGECKO_API_KEY,
+        params: {
+          vs_currency: "inr", // Specify the currency
+          ids: topCoins.join(","), // Join the coins array into a comma-separated string
         },
       }
     );
 
-    const responseData = response.data;
+    const responseData = response.data.map((coin) => ({
+      id: coin.id,
+      symbol: coin.symbol,
+      name: coin.name,
+      current_price: coin.current_price,
+    }));
 
     // Store the fetched data in Redis cache with a TTL (e.g., 60 seconds)
     await redisClient.set(cacheKey, JSON.stringify(responseData), "EX", 60);
@@ -57,7 +59,7 @@ const getTopCoins = async (req, res) => {
     return res.status(200).json(responseData);
   } catch (error) {
     console.error("Error fetching top coins:", error.message);
-    return sendErrResp(res, error);
+    return res.status(500).json({ error: "Failed to fetch top coins data." });
   }
 };
 
