@@ -8,6 +8,7 @@ import Login from "./components/login";
 import Register from "./components/register";
 import ForgotPassword from "./components/forgotPassword";
 import ResetPassword from "./components/resetPassword";
+import Coin from "./components/coin";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path="coin/:id" element={<Coin />} />
           <Route
             path="/forgotPassword/resetPassword/:userId"
             element={<ResetPassword />}

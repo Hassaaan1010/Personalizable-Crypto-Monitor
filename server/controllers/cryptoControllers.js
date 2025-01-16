@@ -107,15 +107,15 @@ const getSearchResults = async (req, res) => {
 
 const addCoin = async (req, res) => {
   try {
-    const { userId, coinName } = req.body;
+    const { userId, coinId } = req.body;
 
     const user = await getUserById(userId);
 
-    if (user.coins.includes(coinName)) {
+    if (user.coins.includes(coinId)) {
       throw badRequestErr("Coin already exists in user's list.");
     }
 
-    user.coins.push(coinName);
+    user.coins.push(coinId);
     await user.save();
 
     res.status(201).json({
