@@ -33,16 +33,22 @@ const fetchAndCachePrices = async () => {
         },
       }
     );
-    console.log("Fetched prices successfully:");
+    console.log("Fetched prices successfully:", response.data);
 
-    // Cache the response in Redis with an expiration of 60 seconds
-    await redisClient.set(
-      "cryptoPrices",
-      JSON.stringify(response.data),
-      "EX",
-      60
-    );
-    console.log("Prices cached successfully:", response.data);
+    // Cache each coin's price separately as key-value pairs in Redis
+    for (const coinId in response.data) {
+      const coinPrice = response.data[coinId];
+
+      // Cache each coin individually
+      await redisClient.set(
+        `coin:${coinId}`, // Unique key for each coin
+        JSON.stringify(coinPrice),
+        "EX",
+        60 // Set cache expiration time (adjust as needed)
+      );
+    }
+
+    console.log("Cached individual coins successfully.");
   } catch (error) {
     console.error("Error fetching or caching prices:", error.message);
   }

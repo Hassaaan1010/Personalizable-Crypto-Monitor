@@ -10,19 +10,39 @@ import {
   getUserById,
   getCoinsByNames,
 } from "./helpers/cryptoHelpers.js";
+import redisClient from "../config/redisConf.js";
 
 const getTopCoins = async (req, res) => {
   try {
+    const topCoins = ["bitcoin", "ethereum", "cardano", "solana"];
+    const cacheKey = "topCoins";
+
+    // Check if top coins data exists in the cache
+    const cachedData = await redisClient.get(cacheKey);
+
+    if (cachedData) {
+      console.log("Cache hit for top coins.");
+      return res.status(200).json(JSON.parse(cachedData));
+    }
+
+    // If cache miss, fetch from CoinGecko API
     const response = await axios.get(COINGECKO_API_URL, {
       params: {
-        ids: "bitcoin,ethereum,cardano,solana", // Add your desired coins here
-        vs_currencies: "inr", // Convert to INR
+        ids: topCoins.join(","), // Join the coins array into a comma-separated string
+        vs_currencies: "inr", // Currency to convert to
       },
     });
-    res.status(200).json(response.data);
+
+    const responseData = response.data;
+
+    // Store the fetched data in Redis cache with a TTL (e.g., 60 seconds)
+    await redisClient.set(cacheKey, JSON.stringify(responseData), "EX", 60);
+
+    console.log("Cache miss. Fetched data from API and stored in cache.");
+    return res.status(200).json(responseData);
   } catch (error) {
     console.error("Error fetching top coins:", error.message);
-    sendErrResp(res, error);
+    return sendErrResp(res, error);
   }
 };
 
@@ -31,6 +51,7 @@ const getUsersCoins = async (req, res) => {
     // console.log(req.query, "asdf",req.params)
     const { userId: id } = req.query;
 
+    // fetch user
     const user = await getUserById(id);
 
     const userCoins = await getCoinsByNames(user.coins);
