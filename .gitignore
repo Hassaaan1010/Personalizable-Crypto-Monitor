@@ -4,6 +4,7 @@
 client/package-lock.json
 server/package-lock.json
 
+bs.json
 
 # Logs
 logs
