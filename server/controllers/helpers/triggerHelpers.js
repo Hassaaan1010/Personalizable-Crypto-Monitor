@@ -1,6 +1,7 @@
 import Trigger from "../../models/trigger.js";
 import nodemailer from "nodemailer";
 import { badRequestErr } from "../../utils/errorHandling.js";
+import { isObjectIdOrHexString } from "mongoose";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -29,7 +30,14 @@ const sendTriggerEmail = async (userEmail, coin, price, triggerType) => {
 };
 
 const createTriggerHelper = async (userId, coin, maxLimit, minLimit) => {
-  if (!userId || !coin || !maxLimit || !minLimit || maxLimit <= minLimit) {
+  if (
+    !userId ||
+    !isObjectIdOrHexString(userId) ||
+    !coin ||
+    !maxLimit ||
+    !minLimit ||
+    maxLimit <= minLimit
+  ) {
     throw badRequestErr("Invalid input.");
   }
 

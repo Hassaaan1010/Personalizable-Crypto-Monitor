@@ -58,7 +58,10 @@ const getUserById = async (id) => {
 // };
 
 const getCoinsByNames = async (coins) => {
-  if (!coins || !Array.isArray(coins) || coins.length === 0) {
+  if (!coins || coins.length === 0) {
+    return {};
+  }
+  if (!Array.isArray(coins)) {
     console.log(coins);
     throw badRequestErr("Invalid list of coin names.");
   }

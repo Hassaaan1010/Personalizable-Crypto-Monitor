@@ -14,7 +14,16 @@ import redisClient from "../config/redisConf.js";
 
 const getTopCoins = async (req, res) => {
   try {
-    const topCoins = ["bitcoin", "ethereum", "cardano", "solana"];
+    const topCoins = [
+      "bitcoin",
+      "ethereum",
+      "tether",
+      "ripple",
+      "binancecoin",
+      "solana",
+      "dogecoin",
+      "usd-coin",
+    ];
     const cacheKey = "topCoins";
 
     // Check if top coins data exists in the cache
@@ -26,12 +35,18 @@ const getTopCoins = async (req, res) => {
     }
 
     // If cache miss, fetch from CoinGecko API
-    const response = await axios.get(COINGECKO_API_URL, {
-      params: {
-        ids: topCoins.join(","), // Join the coins array into a comma-separated string
-        vs_currencies: "inr", // Currency to convert to
-      },
-    });
+    const response = await axios.get(
+      "https://api.coingecko.com/api/v3/coins/markets" || COINGECKO_API_URL,
+      {
+        // params: {
+        //   // ids: topCoins.join(","), // Join the coins array into a comma-separated string
+        //   // vs_currencies: "inr", // Currency to convert to
+        // },
+        headers: {
+          "x-cg-pro-api-key": process.env.COINGECKO_API_KEY,
+        },
+      }
+    );
 
     const responseData = response.data;
 
