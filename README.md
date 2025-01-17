@@ -4,7 +4,6 @@
 
 - **Backend**: Node.js, Express.js, MongoDB, Redis (caching), JWT
 - **Frontend**: React, Vite
-- **Others**: EmailJS (password recovery), Vercel (client deployment)
 
 ---
 
@@ -43,31 +42,24 @@
 #### Steps to Run:
 
 1. Clone the repo:
+
    ```bash
    git clone <repo-url>
    ```
-2. Install dependencies:
-   ```bash
-   npm i # in both `client` and `server`
-   ```
-3. Run the project:
+
+2. Run the project:
    - Backend:
      ```bash
      cd server
+     npm i
      npm run start-all
      ```
    - Frontend:
      ```bash
      cd client
+     npm i
      npm run dev
      ```
-
----
-
-### File Structure Overview
-
-- **Client**: Contains React components, utilities, and stylesheets.
-- **Server**: Organized into `api`, `controllers`, `models`, `workers`, and `middleware` for maintainable code.
 
 ---
 
@@ -86,3 +78,61 @@
 - Intuitive UI with routes for tracking coins, setting alerts, and account management.
 - Real-time updates on coin prices.
 - Dynamic alert creation for price triggers.
+
+### Project Flow Explanation
+
+1. **Overview:**
+   - The project is a full-stack application with clearly defined routes and middleware for user authentication, cryptocurrency management, and password recovery.
+   - Backend API routes are connected to specific controllers and helpers, ensuring modular and maintainable code.
+   - The frontend interacts with these API routes via React components, providing a seamless user experience.
+
+---
+
+2. **Backend Structure:**
+   - **API Routes:**
+     - Located in `api/`, each file corresponds to a specific feature or module. Examples:
+       - `authRoutes.js`: Handles login and registration (`/auth/login`, `/auth/register`).
+       - `cryptoRoutes.js`: Manages cryptocurrency-related actions (`/crypto/topCoins`, `/crypto/addCoin`).
+       - `forgotPasswordRoutes.js`: Supports account recovery and password reset.
+     - All routes are registered centrally via `_index.js` for scalability.
+   - **Controllers & Helpers:**
+     - Business logic is handled in `controllers/`, with reusable logic abstracted into `helpers/`.
+       - Example: `cryptoControllers.js` calls helper methods in `cryptoHelpers.js`.
+   - **Middleware:**
+     - Security and rate-limiting are enforced via `middleware/`.
+       - `jwtAuthorizer.js`: Verifies user tokens.
+       - `rateLimiter.js`: Limits request rates to prevent abuse.
+   - **Models:**
+     - MongoDB schemas in `models/` define the structure for tokens, triggers, and users.
+   - **Workers:**
+     - Background tasks like price fetching (`priceFetcher.js`) and notifications (`triggerNotifier.js`) run asynchronously.
+
+---
+
+3. **Frontend Flow:**
+   - React client defines user-facing routes mapped to backend endpoints:
+     - `/home`: Renders the homepage (`Home.jsx`).
+     - `/login` & `/register`: Handles user authentication.
+     - `/forgotPassword` & `/forgotPassword/resetPassword/:userId`: Supports account recovery and password reset.
+     - `/coin/:id`: Displays details for a specific cryptocurrency.
+     - `/topCoins`: Lists trending cryptocurrencies.
+     - `/searchCoins`: Renders a search page for cryptocurrencies.
+     - Wildcard route (`*`): Redirects unauthenticated users to `/login`.
+
+---
+
+4. **Route Middleware Mapping (Backend):**
+   - Each backend route uses middleware to enforce security and functionality:
+     - **Example: `/home`**
+       - Methods: `GET`
+       - Middleware: `rateLimit`, `authorizeToken`, `anonymous`.
+     - **Example: `/crypto/addCoin`**
+       - Methods: `POST`
+       - Middleware: `anonymous`, `authorizeToken`, `addCoin`.
+
+---
+
+5. **File and Directory Flow:**
+   - Backend routes and frontend components align logically:
+     - **Backend**: `authRoutes.js` manages `/auth/*`, while corresponding components (`Login.jsx`, `Register.jsx`) handle the client-side flow.
+     - **Shared Logic**: Middleware like `jwtAuthorizer.js` and helper utilities like `errorHandling.js` ensure a robust flow between API requests and responses.
