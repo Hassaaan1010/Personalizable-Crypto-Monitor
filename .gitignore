@@ -5,6 +5,7 @@ client/package-lock.json
 server/package-lock.json
 
 bs.json
+server/testMail.js
 
 # Logs
 logs
@@ -86,7 +87,7 @@ server/.testMail
 server/index.html
 
 # dotenv environment variable files
-.env
+# .env
 .env.development.local
 .env.test.local
 .env.production.local

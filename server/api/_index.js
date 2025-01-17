@@ -10,9 +10,9 @@ const routerNode = (app) => {
   app.use("/crypto", cryptoRoutes);
   app.use("/trigger", triggerRoutes);
   app.use("/forgotPassword", forgotPasswordRoutes);
-  // app.use("*", (req, res) => {
-  //   res.redirect("/login");
-  // });
+  app.use("*", (req, res) => {
+    res.redirect("/login");
+  });
 };
 
 export default routerNode;
