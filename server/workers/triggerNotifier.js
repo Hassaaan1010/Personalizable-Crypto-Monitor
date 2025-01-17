@@ -4,6 +4,7 @@ import redisClient from "../config/redisConf.js"; // Assuming Redis is set up
 import connect_database from "../config/mongoConf.js";
 import { sendTriggerEmail } from "../controllers/helpers/triggerHelpers.js";
 import axios from "axios";
+import { COINGECKO_API_URL } from "../controllers/helpers/cryptoHelpers.js";
 // connect to database before running the notifier
 try {
   await connect_database();
@@ -83,4 +84,4 @@ const monitorPriceTriggers = async () => {
 
 // Call the monitor function every minute or based on your preferred interval
 monitorPriceTriggers();
-setInterval(monitorPriceTriggers, 10000); // Run every minute
+setInterval(monitorPriceTriggers, 40000); // Run 40 seconds

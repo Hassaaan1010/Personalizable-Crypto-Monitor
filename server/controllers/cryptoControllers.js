@@ -5,6 +5,7 @@ import {
   badRequestErr,
 } from "../utils/errorHandling.js";
 import {
+  COINGECKO_API_URL,
   COINGECKO_SEARCH_URL,
   getTopCoinsHelper,
   getUserById,

@@ -79,6 +79,26 @@
 - Real-time updates on coin prices.
 - Dynamic alert creation for price triggers.
 
+Challenges Faced
+
+    Setting Up a Live Record of Changing Prices
+        Challenge: Maintaining a live feed of cryptocurrency prices for all coins of interest.
+        Solution: Implemented a parallel worker that fetches prices every 60 seconds and stores them in cache, ensuring up-to-date information for users.
+
+    Managing Cache for Different Purposes
+        Challenge: Efficiently handling cache storage for both topCoins and individual coins of interest without conflicts.
+        Solution: Standardized a storage convention, storing topCoins as a single cache entry and each coin of interest as independent key-value pairs.
+
+    Setting Up Triggers for Mail Services
+        Challenge: Automating email notifications for triggers while managing their states.
+        Solution: Created trigger documents and implemented a parallel worker that runs every 40 seconds, checking for triggers:
+            Activates triggers that meet conditions and sends emails using SMTP NodeMailer.
+            Updates triggers that are active but should be set to inactive.
+
+    Maintaining Modularity and Best Practices
+        Challenge: Balancing productivity with code modularity and maintainability.
+        Solution: Adopted a top-down approach by defining controllers at a high level and abstracting reusable logic into helper functions, ensuring clean and maintainable code.
+
 ### Project Flow Explanation
 
 1. **Overview:**
