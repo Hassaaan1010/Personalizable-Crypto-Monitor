@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import crypto from "crypto";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { isObjectIdOrHexString } from "mongoose";
 import { internalServerErr, badRequestErr } from "../../utils/errorHandling.js";
 import { emailRegex, tokenRegex, passwordRegex } from "../../utils/patterns.js";
