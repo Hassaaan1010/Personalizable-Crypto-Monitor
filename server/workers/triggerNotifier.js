@@ -3,7 +3,7 @@ import User from "../models/user.js";
 import redisClient from "../config/redisConf.js"; // Assuming Redis is set up
 import connect_database from "../config/mongoConf.js";
 import { sendTriggerEmail } from "../controllers/helpers/triggerHelpers.js";
-
+import axios from "axios";
 // connect to database before running the notifier
 try {
   await connect_database();

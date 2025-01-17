@@ -14,10 +14,11 @@ import authorizeToken from "../middleware/jwtAuthorizer.js";
 
 const router = Router();
 
-router.get("/topCoins", rateLimiter, getTopCoins);
-router.get("/myCoins", rateLimiter, authorizeToken, getUsersCoins);
-router.get("/search", rateLimiter, getSearchResults);
-router.post("/addCoin", rateLimiter, authorizeToken, addCoin);
-router.post("/removeCoin", rateLimiter, authorizeToken, removeCoin);
+router
+  .get("/topCoins", rateLimiter, getTopCoins)
+  .get("/myCoins", rateLimiter, authorizeToken, getUsersCoins)
+  .get("/search", rateLimiter, getSearchResults)
+  .post("/addCoin", rateLimiter, authorizeToken, addCoin)
+  .post("/removeCoin", rateLimiter, authorizeToken, removeCoin);
 
 export default router;

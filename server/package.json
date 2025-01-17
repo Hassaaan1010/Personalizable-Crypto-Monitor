@@ -5,8 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "triggers": "node workers/triggers.js",
-    "caching": "node workers/caching.js",
+    "triggers": "node workers/triggerNotifier.js",
+    "caching": "node workers/priceFetcher.js",
     "start-all": "concurrently \"npm run start\" \"npm run triggers\" \"npm run caching\""
   },
   "type": "module",

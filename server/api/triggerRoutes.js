@@ -4,6 +4,6 @@ import authorizeToken from "../middleware/jwtAuthorizer.js";
 
 const router = Router();
 
-router.post("/createTrigger", authorizeToken, createTrigger); //a
+router.post("/createTrigger", authorizeToken, createTrigger);
 
 export default router;

@@ -5,12 +5,11 @@ import {
   badRequestErr,
 } from "../utils/errorHandling.js";
 import {
-  COINGECKO_API_URL,
   COINGECKO_SEARCH_URL,
+  getTopCoinsHelper,
   getUserById,
   getCoinsByNames,
 } from "./helpers/cryptoHelpers.js";
-import redisClient from "../config/redisConf.js";
 
 const getTopCoins = async (req, res) => {
   try {
@@ -24,38 +23,9 @@ const getTopCoins = async (req, res) => {
       "dogecoin",
       "usd-coin",
     ];
-    const cacheKey = "topCoins";
 
-    // Check if top coins data exists in the cache
-    const cachedData = await redisClient.get(cacheKey);
+    const responseData = await getTopCoinsHelper(topCoins);
 
-    if (cachedData) {
-      console.log("Cache hit for top coins.");
-      return res.status(200).json(JSON.parse(cachedData));
-    }
-
-    // If cache miss, fetch from CoinGecko API
-    const response = await axios.get(
-      "https://api.coingecko.com/api/v3/coins/markets",
-      {
-        params: {
-          vs_currency: "inr", // Specify the currency
-          ids: topCoins.join(","), // Join the coins array into a comma-separated string
-        },
-      }
-    );
-
-    const responseData = response.data.map((coin) => ({
-      id: coin.id,
-      symbol: coin.symbol,
-      name: coin.name,
-      current_price: coin.current_price,
-    }));
-
-    // Store the fetched data in Redis cache with a TTL (e.g., 60 seconds)
-    await redisClient.set(cacheKey, JSON.stringify(responseData), "EX", 60);
-
-    console.log("Cache miss. Fetched data from API and stored in cache.");
     return res.status(200).json(responseData);
   } catch (error) {
     console.error("Error fetching top coins:", error.message);
