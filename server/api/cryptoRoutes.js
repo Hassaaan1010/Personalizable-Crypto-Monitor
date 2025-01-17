@@ -1,6 +1,5 @@
 // api/cryptoRoutes.js
 import { Router } from "express";
-import axios from "axios";
 import {
   getTopCoins,
   getUsersCoins,

@@ -1,9 +1,9 @@
 import { Router } from "express";
 import authorizeToken from "../middleware/jwtAuthorizer.js";
-import rateLimit from "express-rate-limit";
+import rateLimiter from "../middleware/rateLimiter.js";
 const router = Router();
 
-router.get("/", rateLimit, authorizeToken, (req, res) => {
+router.get("/", rateLimiter, authorizeToken, (req, res) => {
   return res.status(200).json({ authorized: true });
 });
 

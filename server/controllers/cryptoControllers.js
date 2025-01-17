@@ -36,7 +36,6 @@ const getTopCoins = async (req, res) => {
 
 const getUsersCoins = async (req, res) => {
   try {
-    // console.log(req.query, "asdf",req.params)
     const { userId: id } = req.query;
 
     // fetch user

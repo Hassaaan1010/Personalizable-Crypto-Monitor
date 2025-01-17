@@ -8,9 +8,7 @@ import {
 
 const login = async (req, res) => {
   try {
-    console.log(req.body);
     const { identifier, password } = req.body;
-    console.log(123);
 
     // authenticate user
     const user = await authenticateUser(identifier, password);
@@ -32,7 +30,6 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   try {
-    console.log(req.body);
     let { username, email, password } = req.body;
 
     // validate and create new user
