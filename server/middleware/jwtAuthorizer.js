@@ -6,14 +6,12 @@ dotenv.config();
 const authorizeToken = (req, res, next) => {
   const token = req.headers.authorization;
   const tokenPart = token && token.split(" ")[1];
-  console.log(1);
   if (!tokenPart) {
     console.log("TOKEN NOT PROVIDED");
     return res
       .status(400)
       .json({ error: "No token provided", authorized: false });
   }
-  console.log(2);
 
   jwt.verify(tokenPart, process.env.JWT_SECRET, (error, decoded) => {
     if (error) {
@@ -29,7 +27,6 @@ const authorizeToken = (req, res, next) => {
         .json({ error: "Failed to authenticate token", authorized: false });
     }
     req.userId = decoded.id;
-    console.log(req);
     next();
   });
 };

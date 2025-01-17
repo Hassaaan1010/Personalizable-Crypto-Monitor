@@ -129,7 +129,7 @@ const getTopCoinsHelper = async (topCoins) => {
 
   if (cachedData) {
     console.log("Cache hit for top coins.");
-    return res.status(200).json(JSON.parse(cachedData));
+    return JSON.parse(cachedData);
   }
 
   // If cache miss, fetch from CoinGecko API
