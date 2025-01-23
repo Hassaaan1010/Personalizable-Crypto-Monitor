@@ -1,5 +1,7 @@
 ## Cryptocurrency Price Monitoring System
 
+(Project services closed)
+
 ### Tech Stack
 
 - **Backend**: Node.js, Express.js, MongoDB, Redis (caching), JWT
